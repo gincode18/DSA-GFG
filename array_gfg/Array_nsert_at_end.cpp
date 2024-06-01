@@ -31,15 +31,25 @@ int removeDup(int arr[], int n)
     }
     return res + 1;
 }
+int maxIndexDiff(int arr[], int n)
+{
+    int res = 0;
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = i + 1; j < n; j++)
+        {
+            if (arr[j] >= arr[i])
+            {
+                res = max(res, j - i);
+            }
+        }
+    }
+    return res;
+}
 int main()
 {
-    int arr[] = {10, 10, 10, 20, 20, 30, 30};
+    int arr[] = {34, 8, 10, 3, 2, 80, 30, 33, 1};
     int n = sizeof(arr) / sizeof(int);
-    int x = removeDup(arr, n);
-    for (int i = 0; i < x; i++)
-    {
-        cout << arr[i] << " ";
-    }
-
+    cout << maxIndexDiff(arr, n);
     return 0;
 }
