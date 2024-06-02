@@ -2,7 +2,7 @@
 #include <cmath>
 using namespace std;
 
-int maxCircularSum(int arr[], int n)
+int naivemaxsubSum(int arr[], int n)
 {
     int res = arr[0];
 
@@ -21,13 +21,22 @@ int maxCircularSum(int arr[], int n)
     }
     return res;
 }
+int maxsubarr(int arr[], int n)
+{
+    int max_sum = arr[0];
+    for (int i = 1; i < n; i++)
+    {
+        max_sum = max(max_sum + arr[i], arr[i]);
+    }
+    return max_sum;
+}
 
 int main()
 {
 
-    int arr[] = {5, -2, 3, 4}, n = 4;
+    int arr[] = {-3, 8, -2, 4, -5, 6}, n = sizeof(arr) / sizeof(int);
 
-    cout << maxCircularSum(arr, n);
+    cout << maxsubarr(arr, n);
 
     return 0;
 }
