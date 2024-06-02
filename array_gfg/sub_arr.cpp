@@ -10,11 +10,9 @@ int naivemaxsubSum(int arr[], int n)
     {
         int curr_sum = arr[i];
 
-        for (int j = 1; j < n; j++)
+        for (int j = i+1; j < n; j++)
         {
-            int index = (i + j) % n;
-
-            curr_sum += arr[index];
+            curr_sum += arr[j];
 
             res = max(res, curr_sum);
         }
