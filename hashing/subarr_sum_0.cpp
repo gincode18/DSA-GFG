@@ -1,20 +1,23 @@
 #include <iostream>
 #include <unordered_set>
+
 using namespace std;
 
-int pair_with_sum(vector<int> &arr, int n, int sum)
+int subarr_sum_0(vector<int> &arr, int n)
 {
     unordered_set<int> set;
+    int prefix_sum = 0;
     for (auto num : arr)
     {
-        if (set.find(sum - num) != set.end())
+        prefix_sum += num;
+        if (set.find(prefix_sum) != set.end())
         {
             cout << "true";
             return 1;
         }
         else
         {
-            set.insert(num);
+            set.insert(prefix_sum);
         }
     }
     cout << "false";
@@ -23,8 +26,8 @@ int pair_with_sum(vector<int> &arr, int n, int sum)
 
 int main()
 {
-    vector<int> arr = {34, 8, 10, 3, 2, 80, 30, 33, 1};
+    vector<int> arr = {-3, 8, -2, 7, -5, 6};
     int n = arr.size();
-    pair_with_sum(arr, n, 6);
+    subarr_sum_0(arr, n);
     return 0;
 }
