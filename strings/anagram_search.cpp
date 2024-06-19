@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-int naive_pattern_searching()
+int anagram_search()
 {
     return 0;
 }
