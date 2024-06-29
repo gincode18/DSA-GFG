@@ -29,9 +29,9 @@ int egg_dropping_puzzle(int n, int f)
         dp[0][i] = 0;
         dp[1][i] = 1;
     }
-    for (int i = 2; i <= f; i++)
+    for (int i = 1; i <= f; i++)
     {
-        dp[i][2] = i;
+        dp[i][1] = i;
     }
     for (int i = 2; i <= n; i++)
     {
