@@ -9,14 +9,12 @@ public:
     int data;
     Node *left;
     Node *right;
-    int lcount;
 
     Node(int x)
     {
         this->data = x;
         this->left = NULL;
         this->right = NULL;
-        this->lcount = 0;
     }
 };
 
@@ -41,7 +39,6 @@ Node *insert(Node *root, int key)
     if (key < root->data)
     {
         root->left = insert(root->left, key);
-        root->lcount++;
     }
     else
     {
@@ -50,9 +47,9 @@ Node *insert(Node *root, int key)
     return root;
 }
 
-map<int, vector<int>> mp;
+map<int, int> mp;
 
-void vertical_traversal_of_binary_tree(Node *root)
+void bottom_view_of_binary_tree(Node *root)
 {
     if (root == NULL)
     {
@@ -60,6 +57,7 @@ void vertical_traversal_of_binary_tree(Node *root)
     }
 
     queue<pair<Node *, int>> q;
+
     q.push({root, 0});
 
     while (q.empty() == false)
@@ -67,7 +65,7 @@ void vertical_traversal_of_binary_tree(Node *root)
         pair<Node *, int> front = q.front();
         q.pop();
 
-        mp[front.second].push_back(front.first->data);
+        mp[front.second] = front.first->data;
 
         if (front.first->left != NULL)
         {
@@ -102,16 +100,11 @@ int main()
     insert(root, 7);
     insert(root, 13);
 
-    vertical_traversal_of_binary_tree(root);
+    bottom_view_of_binary_tree(root);
 
-    for (auto vec : mp)
+    for (auto ele : mp)
     {
-        cout << vec.first << ":";
-        for (auto ele : vec.second)
-        {
-            cout << ele << " ";
-        }
-        cout << "\n";
+        cout << ele.first << ":" << ele.second << " ";
     }
 
     return 0;
