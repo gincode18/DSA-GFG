@@ -7,18 +7,16 @@ void add_edge(vector<int> arr[], int a, int b)
     arr[a].push_back(b);
 }
 
-void topological_sorting_kahns_bfs_based_algortihm(vector<int> arr[], int v)
+bool detect_cycle_in_a_directed_graph_using_kahns_algorithm(vector<int> arr[], int v)
 {
-    vector<int> in_degree(v, 0);
     queue<int> q;
-
-    // collecting all indigree
+    vector<int> in_degree(v, 0);
 
     for (int i = 0; i < v; i++)
     {
-        for (auto ele : arr[i])
+        for (auto num : arr[i])
         {
-            in_degree[ele]++;
+            in_degree[num]++;
         }
     }
 
@@ -30,12 +28,12 @@ void topological_sorting_kahns_bfs_based_algortihm(vector<int> arr[], int v)
         }
     }
 
+    int count = 0;
+
     while (q.empty() == false)
     {
         int front = q.front();
         q.pop();
-
-        cout << front << " ";
 
         for (auto num : arr[front])
         {
@@ -48,7 +46,11 @@ void topological_sorting_kahns_bfs_based_algortihm(vector<int> arr[], int v)
                 }
             }
         }
+
+        count++;
     }
+
+    return count != v;
 }
 
 int main()
@@ -73,7 +75,16 @@ int main()
     add_edge(arr, 4, 5);
     add_edge(arr, 5, 3);
 
-    topological_sorting_kahns_bfs_based_algortihm(arr, v);
+    int res = detect_cycle_in_a_directed_graph_using_kahns_algorithm(arr, v);
+
+    if (res)
+    {
+        cout << "loop";
+    }
+    else
+    {
+        cout << "no_loop";
+    }
 
     return 0;
 }
