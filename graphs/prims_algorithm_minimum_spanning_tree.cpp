@@ -8,13 +8,14 @@ int prims_algorithm_minimum_spanning_tree(vector<vector<int>> arr, int v)
 
     distance[0] = 0;
     int res = 0;
-    int u = -1;
+
     // find minimum
     for (int count = 0; count < v; count++)
     {
+        int u = -1;
         for (int i = 0; i < v; i++)
         {
-            if (visited[i] == false && (u != -1 || distance[i] < distance[u]))
+            if (visited[i] == false && (u == -1 || distance[i] < distance[u]))
             {
                 u = i;
             }
