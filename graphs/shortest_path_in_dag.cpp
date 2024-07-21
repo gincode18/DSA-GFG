@@ -1,8 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <list>
 #include <stack>
-#include <climits>
 using namespace std;
 
 class AdjListNode
@@ -23,7 +21,7 @@ public:
 class Graph
 {
 	int V;
-	vector<list<AdjListNode>> arr;
+	vector<vector<AdjListNode>> arr;
 
 	void topologicalSortUtil(int s, vector<bool> &visited, stack<int> &st);
 
