@@ -1,6 +1,8 @@
 #include <iostream>
+#include <vector>
 #include <list>
 #include <stack>
+#include <climits>
 using namespace std;
 
 class AdjListNode
@@ -21,7 +23,6 @@ public:
 class Graph
 {
 	int V;
-
 	vector<list<AdjListNode>> arr;
 
 	void topologicalSortUtil(int s, vector<bool> &visited, stack<int> &st);
@@ -77,16 +78,14 @@ void Graph::shortestPath(int s)
 
 	dist[s] = 0;
 
-	while (st.empty() == false)
+	while (st.empty()==false)
 	{
 		int top = st.top();
 		st.pop();
 
-		// calculating distance
-
-		for (auto num : arr[top])
+		if (dist[top] != INT_MAX)
 		{
-			if (dist[num.getV()] != INT_MAX)
+			for (auto num : arr[top])
 			{
 				if (dist[num.getV()] > dist[top] + num.getWeight())
 				{
@@ -94,14 +93,20 @@ void Graph::shortestPath(int s)
 				}
 			}
 		}
+	}
 
-		// print
-
-		for (int i = 0; i < V; i++)
+	for (int i = 0; i < V; i++)
+	{
+		if (dist[i] == INT_MAX)
 		{
-			(dist[i] == INT_MAX) ? cout << "INF " : cout << dist[i] << " ";
+			cout << "INF ";
+		}
+		else
+		{
+			cout << dist[i] << " ";
 		}
 	}
+	cout << endl;
 }
 
 int main()
