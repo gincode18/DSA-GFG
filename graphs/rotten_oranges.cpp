@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include <queue>
 using namespace std;
 
@@ -6,82 +7,61 @@ using namespace std;
 
 int rotten_oranges(vector<vector<int>> arr, int v)
 {
-    vector<vector<bool>> visited(v, vector<bool>(v, false));
-    int total_fresh_oranges = 0;
-    int time = 0;
-    queue<pair<int, int>> q;
+    int ct = 0, res = -1;
+    // queue to store cells which have rotten oranges.
+    queue<vector<int>> q;
+    vector<vector<int>> dir = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
-    for (int i = 0; i < v; i++)
+    // traversing over all the cells of the matrix.
+    for (int i = 0; i < arr.size(); i++)
     {
-        for (int j = 0; j < v; j++)
+        for (int j = 0; j < arr[0].size(); j++)
         {
-            if (arr[i][j] == 2 && visited[i][j] == false)
-            {
-                visited[i][j] = true;
+            // if arr value is more than 0, we increment the counter.
+            if (arr[i][j] > 0)
+                ct++;
+            // if arr value is 2, we push the cell indexes into queue.
+            if (arr[i][j] == 2)
                 q.push({i, j});
-            }
-            if (arr[i][j] == 1)
-            {
-                total_fresh_oranges++;
-            }
         }
     }
-
-    bool changed = false;
-
-    while (q.empty() == false)
+    while (!q.empty())
     {
-        pair<int, int> fornt = q.front();
-        int i = fornt.first;
-        int j = fornt.second;
-        q.pop();
-
-        vector<vector<int>> distances = {{0, -1}, {-1, 0}, {1, 0}, {0, 1}};
-
-        for (auto dis : distances)
+        // incrementing result counter.
+        res++;
+        int size = q.size();
+        for (int k = 0; k < size; k++)
         {
-            int new_row = i + dis[0];
-            int new_col = j + dis[1];
+            // popping the front element of queue and storing cell indexes.
+            vector<int> cur = q.front();
+            ct--;
+            q.pop();
 
-            if (new_row < v && new_col < v && new_col >= 0 && new_row >= 0)
+            // traversing the adjacent vertices.
+            for (int i = 0; i < 4; i++)
             {
-                if (arr[new_row][new_col] == 1 && visited[new_row][new_col] == false)
-                {
-                    arr[new_row][new_col] = 2;
-                    visited[new_row][new_col] = true;
-                    q.push({new_row, new_col});
-                    changed = true;
-                    total_fresh_oranges--;
-                }
+                int x = cur[0] + dir[i][0], y = cur[1] + dir[i][1];
+
+                // if cell indexes are within matrix bounds and arr value
+                // is not 1, we continue the loop else we store 2 in current
+                // cell and push the cell indexes in the queue.
+                if (x >= arr.size() || x < 0 || y >= arr[0].size() || y < 0 ||
+                    arr[x][y] != 1)
+                    continue;
+                arr[x][y] = 2;
+                q.push({x, y});
             }
         }
-
-        if (changed)
-        {
-            time++;
-        }
     }
-
-    if (total_fresh_oranges != 0)
-    {
-        return -1;
-    }
-
-    else
-    {
-        return time;
-    }
+    // returning the minimum time.
+    if (ct == 0)
+        return max(0, res);
+    return -1;
 }
 
 int main()
 {
-    vector<vector<int>> arr = {
-        {0, 1, 2},
-        {0, 1, 2},
-        {2, 1, 1}};
-
-    // int res = rotten_oranges_naive(arr, arr.size());
-    // cout << res << " ";
+    vector<vector<int>> arr = {{0, 1, 2}, {0, 1, 2}, {2, 1, 1}};
 
     int res = rotten_oranges(arr, arr.size());
     cout << res << " ";
