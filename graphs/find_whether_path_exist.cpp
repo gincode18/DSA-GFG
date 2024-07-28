@@ -25,9 +25,9 @@ bool dfs_is_path(vector<vector<int>> &arr, int row, int col, vector<vector<bool>
         int new_row = row + distance.first;
         int new_col = col + distance.second;
 
-        if (is_safe(arr, new_row, new_col, visited))
+        if (dfs_is_path(arr, new_row, new_col, visited))
         {
-            dfs_is_path(arr, new_row, new_col, visited);
+            return true;
         }
     }
     return false;
